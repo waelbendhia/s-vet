@@ -1,0 +1,898 @@
+@import "~antd/dist/antd.less";
+
+@layout-header-background: #fff;
+@layout-header-color: #275682;
+@primary-color: #275682;
+@secondary-color: #3e8eb3;
+@font-family: "Open Sans", sans-serif;
+@heading-font-family: "Questrial", sans-serif;
+@border-radius-base: 4px;
+@layout-body-background: transparent;
+
+#root {
+  height: 100%;
+  overflow: auto;
+}
+
+.ant-table-cell {
+  padding: 12px 16px !important;
+}
+
+.ant-spin-blur::after {
+  background: inherit;
+  /* background: #edf2f5; */
+}
+
+.ant-divider {
+  border: 0;
+}
+
+.full-page-spin {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.schedule {
+  .ant-form-item:not(:last-child) {
+    margin-bottom: 12px;
+  }
+  .ant-form-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    grid-gap: 8px;
+  }
+}
+
+.ant-menu-horizontal {
+  border-bottom: 0;
+}
+
+.ant-input-number {
+  width: 100%;
+}
+
+.ant-input-group-addon {
+  border: 0;
+  border-bottom: (@border-radius-base / 2px) solid @primary-color!important;
+}
+
+.ant-picker {
+  width: 100%;
+}
+
+.ant-table-cell {
+  border: 0 !important;
+}
+
+.owner-pets-list,
+.previous-list {
+  display: grid;
+  grid-gap: 64px;
+  .ant-btn-group {
+    grid-column-start: 1;
+    grid-column-end: -1;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.descriptions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 16px;
+  & > h2 {
+    grid-column: 1 e("/") -1;
+    margin-bottom: 0;
+    font-size: 19px;
+  }
+}
+
+.descriptions-label,
+.ant-form-item-label {
+  font-family: @font-family;
+  font-size: 0.9em;
+  opacity: 0.8;
+  font-weight: 400;
+  pointer-events: none;
+  user-select: none;
+}
+
+.descriptions-item {
+  flex-direction: column;
+  .descriptions-value {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.2em;
+    font-weight: 500;
+  }
+}
+
+.statistics {
+  display: grid;
+  grid-gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.home-list {
+  padding: 16px;
+  margin: 16px;
+}
+
+.table-view-root {
+  height: 100%;
+}
+
+.tariffs {
+  margin-bottom: 16px;
+}
+
+.tariffs,
+.change-password {
+  padding: 16px;
+}
+
+.focus-root > .main-content,
+.overview,
+.table-list,
+.stats-by-hour,
+.tariffs,
+.change-password,
+.home-list {
+  background-color: @layout-header-background;
+  border-radius: @border-radius-base*2px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.appointments-list {
+  border-radius: @border-radius-base*2px;
+}
+
+.appointment-overview {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  .appointment-description {
+    &.medium,
+    &.large {
+      font-size: 1.1em;
+    }
+    &.small {
+      font-size: 0.9em;
+    }
+    color: rgba(0, 0, 0, 0.6);
+    a b {
+      font-size: 1.2em;
+      color: @secondary-color;
+      font-weight: 400;
+      :hover {
+        color: @primary-color;
+      }
+    }
+    b {
+      font-size: 1.2em;
+      color: rgba(0, 0, 0, 1);
+      font-weight: 400;
+    }
+  }
+}
+
+.table-root {
+  min-height: calc(100% - 72px);
+  display: grid;
+  @media (min-width: 1600px) {
+    grid-template-columns: 2fr 500px;
+  }
+  @media (max-width: 1600px) {
+    grid-template-columns: 1fr;
+  }
+  grid-gap: 16px;
+  & .ant-table {
+    overflow: auto;
+    & .ant-table-cell {
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+  & > .table-list,
+  & > .appointments-list {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.page-root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-root,
+.table-root,
+.table-list,
+.appointments-list,
+.focus-root {
+  flex: 1;
+  padding: 16px;
+  overflow: auto;
+}
+
+.focus-root {
+  display: grid;
+  &.static {
+    & > .side-content {
+      padding: 0;
+    }
+    grid-template-columns: 2fr 1fr;
+  }
+  &.responsive {
+    grid-template-columns: 2fr 500px;
+    @media (max-width: 1600px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  grid-gap: 16px;
+  & > .side-content {
+    padding: 16px;
+  }
+  & > .main-content {
+    padding: 16px;
+    & > .ant-form {
+      & > div:last-child {
+        margin-bottom: 0;
+        .ant-form-item-control-input-content {
+          display: flex;
+          /* justify-content: flex-end; */
+        }
+      }
+    }
+  }
+}
+
+.home-root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.login-root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  background-image: url("./assets/logo.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.ant-layout {
+  height: 100%;
+  overflow: auto;
+  overflow-x: hidden;
+  .ant-layout-sider,
+  .ant-layout-header {
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 3;
+  }
+  .ant-layout-sider {
+    & .logo {
+      height: 144px;
+      margin: 0 16px;
+    }
+    & .logout-item {
+      margin-bottom: 48px;
+      & > .ant-btn {
+        width: 100%;
+      }
+    }
+  }
+  .ant-layout-header {
+    margin-left: -16px;
+    padding-left: 64px;
+    margin-right: -16px;
+    padding-right: 64px;
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    & .logo-title {
+      font-size: 20px;
+      display: flex;
+      grid-gap: 16px;
+    }
+    & .logo {
+      height: 64px;
+      width: 48px;
+    }
+    .ant-menu {
+      height: 100%;
+      .ant-menu-item {
+        height: 100% - 1px;
+      }
+    }
+  }
+}
+
+.home-root .ant-list .ant-btn-group {
+  & > *:first-child {
+    width: 110px;
+  }
+  & > *:last-child {
+    width: 120px;
+  }
+}
+
+.ant-layout-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.ant-modal {
+  padding-bottom: 0;
+}
+
+.ant-modal,
+.ant-card {
+  border: 0;
+  border-top: 8px solid @secondary-color;
+  border-radius: 0 0 (@border-radius-base*2px) (@border-radius-base*2px);
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+a {
+  color: @secondary-color;
+}
+
+.ant-modal-footer,
+.ant-modal-body,
+.ant-modal-content,
+.ant-modal-header {
+  border-radius: 0;
+  border: 0;
+}
+
+.ant-modal-content {
+  border-bottom-left-radius: @border-radius-base;
+  border-bottom-right-radius: @border-radius-base;
+}
+
+.ant-card-head {
+  border: 0;
+}
+
+.ant-select-selector {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+  border: 0 !important;
+  border-bottom: (@border-radius-base / 2px) solid @primary-color!important;
+  border-radius: (@border-radius-base / 2px) !important;
+}
+
+.ant-picker,
+.ant-select-selector,
+.ant-input,
+.ant-input-number,
+.ant-input-affix-wrapper {
+  background-color: rgba(0, 0, 0, 0.03);
+  border: 0;
+  border-bottom: (@border-radius-base / 2px) solid @primary-color;
+  border-radius: (@border-radius-base / 2px);
+}
+
+.ant-input-affix-wrapper > .ant-input {
+  background: transparent;
+  border-bottom: 0;
+}
+
+.ant-page-header {
+  z-index: 2;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+h1,
+h2,
+h3,
+h4,
+.ant-page-header-heading-title,
+.ant-page-header-heading-sub-title {
+  color: rgba(0, 0, 0, 0.6);
+  font-family: @heading-font-family;
+}
+
+.ant-card-head-title {
+  color: #3e8eb3;
+  font-weight: 300;
+  font-size: 20px;
+  font-family: @heading-font-family;
+}
+
+.ant-btn {
+  text-transform: uppercase;
+  font-family: @font-family;
+}
+
+.ant-form-item {
+  flex-direction: column;
+}
+
+.ant-form-item-label {
+  text-align: left;
+  margin-bottom: 4px;
+  label::after {
+    content: none;
+  }
+}
+
+.s-vet-autocomplete {
+  display: flex;
+  & > button {
+    margin-left: 8px;
+  }
+}
+
+.diagnosis-cell {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.consultations-actions {
+  display: grid;
+  grid-template-columns: 110px 85px 120px;
+}
+
+.form-row-flex {
+  display: flex;
+  flex-direction: row;
+  grid-gap: 8px;
+}
+
+.form-row-loop (@i) when (@i > 0) {
+  .form-row-@{i} {
+    display: grid;
+    grid-gap: 8px;
+    grid-template-columns: repeat(@i, 1fr);
+  }
+  .form-row-loop(@i - 1);
+}
+.form-row-loop (8);
+
+.schedule-cell-loop (@i) when (@i >= 0) {
+  .schedule-cell-@{i} {
+    text-align: center;
+    overflow: hidden;
+    & when (@i = 0) {
+      background: @layout-header-background;
+    }
+    & when (@i = 1) {
+      background: @secondary-color;
+      color: @layout-header-background;
+    }
+    & when (@i > 1) {
+      background: @primary-color;
+      color: @layout-header-background;
+    }
+  }
+  .schedule-cell-loop(@i - 1);
+}
+.schedule-cell-loop (2);
+
+body {
+  background: #edf2f5;
+}
+
+.stats-by-hour {
+  padding: 16px;
+}
+
+.stats-header {
+  padding: 0 16px 16px;
+}
+
+.week-calendar {
+  @cell-height: 48px;
+  display: grid;
+  grid-template: "empty header" "side calendar" / 30px 1fr;
+  .week-headers {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-area: header;
+  }
+  .week-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    text-align: center;
+    & > h2 {
+      margin-bottom: 0;
+    }
+  }
+  .week-cells {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-area: calendar;
+  }
+  .cell {
+    height: @cell-height;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    line-height: @cell-height;
+    & > .label {
+      font-family: @font-family;
+      font-size: 0.9em;
+      opacity: 0.8;
+      font-weight: 400;
+      pointer-events: none;
+      user-select: none;
+      text-align: right;
+    }
+  }
+  .week-side {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-area: side;
+    & > div {
+      font-size: 0.9em;
+      color: rgba(0, 0, 0, 0.6);
+      padding-right: 12px;
+      text-align: right;
+      line-height: 0;
+    }
+  }
+}
+
+.dashboard-root {
+  padding: 24px;
+}
+
+.search-controls {
+  display: flex;
+  flex-direction: row;
+  grid-gap: 16px;
+  justify-content: stretch;
+  & > * {
+    flex: 1;
+  }
+  & > .state-filter {
+    max-width: 160px;
+  }
+}
+
+// fonts
+/* cyrillic-ext */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN_r8OX-hpOqc.woff2)
+    format("woff2");
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F,
+    U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN_r8OVuhpOqc.woff2)
+    format("woff2");
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN_r8OXuhpOqc.woff2)
+    format("woff2");
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN_r8OUehpOqc.woff2)
+    format("woff2");
+  unicode-range: U+0370-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN_r8OXehpOqc.woff2)
+    format("woff2");
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1,
+    U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN_r8OXOhpOqc.woff2)
+    format("woff2");
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN_r8OUuhp.woff2)
+    format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFWJ0bbck.woff2)
+    format("woff2");
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F,
+    U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFUZ0bbck.woff2)
+    format("woff2");
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFWZ0bbck.woff2)
+    format("woff2");
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFVp0bbck.woff2)
+    format("woff2");
+  unicode-range: U+0370-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFWp0bbck.woff2)
+    format("woff2");
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1,
+    U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFW50bbck.woff2)
+    format("woff2");
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFVZ0b.woff2)
+    format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UNirkOX-hpOqc.woff2)
+    format("woff2");
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F,
+    U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UNirkOVuhpOqc.woff2)
+    format("woff2");
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UNirkOXuhpOqc.woff2)
+    format("woff2");
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UNirkOUehpOqc.woff2)
+    format("woff2");
+  unicode-range: U+0370-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UNirkOXehpOqc.woff2)
+    format("woff2");
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1,
+    U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UNirkOXOhpOqc.woff2)
+    format("woff2");
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UNirkOUuhp.woff2)
+    format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN7rgOX-hpOqc.woff2)
+    format("woff2");
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F,
+    U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN7rgOVuhpOqc.woff2)
+    format("woff2");
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN7rgOXuhpOqc.woff2)
+    format("woff2");
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN7rgOUehpOqc.woff2)
+    format("woff2");
+  unicode-range: U+0370-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN7rgOXehpOqc.woff2)
+    format("woff2");
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1,
+    U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN7rgOXOhpOqc.woff2)
+    format("woff2");
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN7rgOUuhp.woff2)
+    format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+/* vietnamese */
+@font-face {
+  font-family: "Questrial";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/questrial/v12/QdVUSTchPBm7nuUeVf70sSFlq20.woff2)
+    format("woff2");
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1,
+    U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: "Questrial";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/questrial/v12/QdVUSTchPBm7nuUeVf70sCFlq20.woff2)
+    format("woff2");
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: "Questrial";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/questrial/v12/QdVUSTchPBm7nuUeVf70viFl.woff2)
+    format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
