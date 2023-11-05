@@ -1,0 +1,19 @@
+cradle:
+  cabal:
+    - path: "src"
+      component: "lib:s-vet"
+
+    - path: "app/Main.hs"
+      component: "s-vet:exe:s-vet-server"
+
+    - path: "app/Paths_s_vet.hs"
+      component: "s-vet:exe:s-vet-server"
+
+    - path: "inserter/Main.hs"
+      component: "s-vet:exe:s-vet-file-inserter"
+
+    - path: "inserter/Paths_s_vet.hs"
+      component: "s-vet:exe:s-vet-file-inserter"
+
+    - path: "test"
+      component: "s-vet:test:s-vet-test"

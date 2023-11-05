@@ -1,0 +1,222 @@
+cabal-version:      3.0
+
+name:               s-vet
+version:            0.1.0.0
+description:
+  Please see the README on GitHub at <https://github.com/githubuser/s-vet#readme>
+
+homepage:           https://github.com/githubuser/s-vet#readme
+bug-reports:        https://github.com/githubuser/s-vet/issues
+author:             Author name here
+maintainer:         example@example.com
+copyright:          2020 Author name here
+license:            BSD-3-Clause
+license-file:       LICENSE
+build-type:         Simple
+extra-source-files: README.md
+
+source-repository head
+  type:     git
+  location: https://github.com/githubuser/s-vet
+
+common extensions-options
+  default-extensions:
+    NoImplicitPrelude
+    BlockArguments
+    ConstraintKinds
+    DataKinds
+    DefaultSignatures
+    DeriveGeneric
+    DerivingVia
+    DuplicateRecordFields
+    FlexibleContexts
+    FlexibleInstances
+    FunctionalDependencies
+    GADTs
+    GeneralizedNewtypeDeriving
+    KindSignatures
+    LambdaCase
+    MultiParamTypeClasses
+    MultiWayIf
+    OverloadedLabels
+    OverloadedStrings
+    PolyKinds
+    QuasiQuotes
+    RankNTypes
+    ScopedTypeVariables
+    StandaloneDeriving
+    TemplateHaskell
+    TupleSections
+    TypeApplications
+    TypeFamilies
+    TypeOperators
+    UndecidableInstances
+
+  ghc-options:
+    -Wall -Wcompat -Werror -Widentities -Wincomplete-uni-patterns
+    -Wpartial-fields -Wredundant-constraints
+
+  default-language:   Haskell2010
+
+library
+  import:          extensions-options
+  exposed-modules:
+    SVet
+    SVet.API
+    SVet.API.Acts
+    SVet.API.Authentication
+    SVet.API.Consultations
+    SVet.API.Owners
+    SVet.API.Pets
+    SVet.API.Settings
+    SVet.API.Statistics
+    SVet.API.Treatments
+    SVet.Authentication
+    SVet.Constants
+    SVet.Domain
+    SVet.Domain.Account
+    SVet.Domain.Authentication
+    SVet.Domain.Entities
+    SVet.Domain.Internal
+    SVet.Domain.Settings
+    SVet.Domain.Statistics
+    SVet.Repository
+    SVet.Repository.Act
+    SVet.Repository.Consultations
+    SVet.Repository.Crypt
+    SVet.Repository.Owner
+    SVet.Repository.Pet
+    SVet.Repository.Settings
+    SVet.Repository.Statistics
+    SVet.Repository.Tables
+    SVet.Repository.Tables.V1
+    SVet.Repository.Treatment
+    SVet.ServerError
+    SVet.TH
+    SVet.Timing
+
+  other-modules:
+    Paths_s_vet
+    SVet.API.Internal
+    SVet.Logging
+    SVet.Repository.Internal
+    SVet.Selda
+    SVet.Tracing
+
+  hs-source-dirs:  src
+  build-depends:
+    , aeson
+    , aeson-optics
+    , base
+    , bcrypt
+    , bytestring
+    , cache
+    , clock
+    , cookie
+    , cryptonite
+    , exceptions
+    , formatting
+    , hashable
+    , hs-opentelemetry-api
+    , hs-opentelemetry-instrumentation-wai
+    , hs-opentelemetry-sdk
+    , http-client
+    , http-client-tls
+    , katip
+    , monad-control
+    , network-uri
+    , optics
+    , optparse-generic
+    , polysemy
+    , polysemy-zoo
+    , relude
+    , resource-pool
+    , selda
+    , selda-json
+    , selda-postgresql
+    , servant
+    , servant-auth
+    , servant-auth-server
+    , servant-server
+    , template-haskell
+    , text
+    , time
+    , transformers-base
+    , vault
+    , wai
+    , warp
+
+executable s-vet-server
+  import:         extensions-options
+  main-is:        Main.hs
+  other-modules:  Paths_s_vet
+  hs-source-dirs: app
+  ghc-options:    -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+    , base
+    , optparse-generic
+    , relude
+    , s-vet
+
+executable s-vet-file-inserter
+  import:         extensions-options
+  main-is:        Main.hs
+  other-modules:  Paths_s_vet
+  hs-source-dirs: inserter
+  ghc-options:    -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+    , aeson
+    , aeson-optics
+    , base
+    , bcrypt
+    , exceptions
+    , network-uri
+    , optics
+    , optparse-generic
+    , relude
+    , s-vet
+    , selda
+    , selda-postgresql
+
+test-suite s-vet-test
+  import:         extensions-options
+  type:           exitcode-stdio-1.0
+  main-is:        Spec.hs
+  other-modules:  Paths_s_vet
+  hs-source-dirs: test
+  ghc-options:    -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+    , aeson
+    , aeson-optics
+    , base
+    , bcrypt
+    , bytestring
+    , cache
+    , capability
+    , clock
+    , cookie
+    , formatting
+    , hashable
+    , hspec
+    , hspec-wai
+    , hspec-wai-json
+    , http-client
+    , http-client-tls
+    , HUnit
+    , network-uri
+    , optics
+    , optparse-generic
+    , relude
+    , resource-pool
+    , s-vet
+    , selda
+    , selda-postgresql
+    , servant
+    , servant-auth
+    , servant-auth-server
+    , servant-server
+    , template-haskell
+    , text
+    , time
+    , wai
+    , warp

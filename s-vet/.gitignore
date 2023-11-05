@@ -1,0 +1,7 @@
+.gradle
+.hie
+.stack-work
+.env
+*.db
+tags
+dist-newstyle/*

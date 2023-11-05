@@ -1,0 +1,11 @@
+.dockerignore
+Dockerfile
+*.Dockerfile
+.git/
+.gitignore
+dist-newstyle/
+TODO.md
+svet.db
+tags
+Procfile
+*.json

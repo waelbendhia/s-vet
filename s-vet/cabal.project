@@ -1,0 +1,3 @@
+packages: s-vet.cabal
+with-compiler: ghc-9.2.8
+allow-newer: co-log-concurrent:base, co-log-concurrent:co-log-core

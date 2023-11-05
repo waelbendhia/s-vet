@@ -1,0 +1,1 @@
+web: s-vet-server --port $PORT --dbUrl $DATABASE_URL --dbPool $POOL_SIZE
