@@ -1,5 +1,3 @@
-LABEL org.opencontainers.image.source=https://github.com/waelbendhia/s-vet-monorepo
-
 FROM haskell:9.2.8 as build
 RUN mkdir /opt/build
 WORKDIR /opt/build
@@ -17,6 +15,9 @@ RUN cabal build s-vet-server
 RUN cp $(cabal list-bin s-vet-server) .
 
 FROM debian:buster as app
+
+LABEL org.opencontainers.image.source=https://github.com/waelbendhia/s-vet-monorepo
+
 RUN mkdir -p /opt/app
 WORKDIR /opt/app
 
