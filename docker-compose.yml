@@ -28,7 +28,6 @@ services:
     - "9411:9411"
 
   server:
-    # image: ghcr.io/waelbendhia/s-vet:v2.1.0
     build:
       context: ./s-vet
       dockerfile: ./Dockerfile
@@ -45,7 +44,6 @@ services:
       - "1234:1234"
 
   web-app:
-    # image: ghcr.io/waelbendhia/s-vet-web:v2.0.1
     build:
       context: ./s-vet-web
       dockerfile: ./Dockerfile
