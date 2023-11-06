@@ -56,7 +56,7 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         envs: COMPOSE_DIRECTORY
         script: |
-          echo "using directory: $COMPOSE_DIRECTORY"
-          docker compose --project-directory "$COMPOSE_DIRECTORY" down server
-          docker compose --project-directory "$COMPOSE_DIRECTORY" pull server
-          docker compose --project-directory "$COMPOSE_DIRECTORY" up server -d
+          echo "using directory: ${COMPOSE_DIRECTORY}"
+          docker compose --project-directory "${COMPOSE_DIRECTORY}" down server
+          docker compose --project-directory "${COMPOSE_DIRECTORY}" pull server
+          docker compose --project-directory "${COMPOSE_DIRECTORY}" up server -d
