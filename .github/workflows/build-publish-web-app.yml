@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    paths:
+      - 's-vet-web/**'
 
 env:
   REGISTRY: ghcr.io
@@ -56,7 +56,7 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         envs: COMPOSE_DIRECTORY
         script: |
-          echo "$COMPOSE_DIRECTORY"
+          echo "using directory: $COMPOSE_DIRECTORY"
           docker compose --project-directory "$COMPOSE_DIRECTORY" down server
           docker compose --project-directory "$COMPOSE_DIRECTORY" pull server
           docker compose --project-directory "$COMPOSE_DIRECTORY" up server -d
