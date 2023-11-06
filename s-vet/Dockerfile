@@ -16,7 +16,7 @@ RUN cp $(cabal list-bin s-vet-server) .
 
 FROM debian:buster as app
 
-LABEL org.opencontainers.image.source=https://github.com/waelbendhia/s-vet-monorepo
+LABEL org.opencontainers.image.source=https://github.com/waelbendhia/s-vet
 
 RUN mkdir -p /opt/app
 WORKDIR /opt/app

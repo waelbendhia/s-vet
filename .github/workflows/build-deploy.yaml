@@ -87,4 +87,4 @@ jobs:
         script: |
           docker compose --project-directory $COMPOSE_DIRECTORY down
           docker compose --project-directory $COMPOSE_DIRECTORY pull
-          docker compose --project-directory $COMPOSE_DIRECTORY -d up
+          docker compose --project-directory $COMPOSE_DIRECTORY up -d

@@ -10,7 +10,7 @@ RUN yarn build
 
 FROM nginx:stable
 
-LABEL org.opencontainers.image.source=https://github.com/waelbendhia/s-vet-monorepo
+LABEL org.opencontainers.image.source=https://github.com/waelbendhia/s-vet
 
 RUN rm /etc/nginx/conf.d/default.conf
 COPY --from=build /app/build /opt/s-vet
