@@ -50,7 +50,7 @@ jobs:
     - name: Pull and restart containers
       uses: appleboy/ssh-action@v1.0.0
       env:
-        COMPOSE_DIRECTORY: $COMPOSE_DIRECTORY
+        COMPOSE_DIRECTORY: ${{ COMPOSE_DIRECTORY }}
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
