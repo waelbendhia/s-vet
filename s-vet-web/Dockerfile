@@ -1,3 +1,5 @@
+LABEL org.opencontainers.image.source=https://github.com/waelbendhia/s-vet-monorepo
+
 FROM node:18-alpine AS build
 WORKDIR /app
 

@@ -1,3 +1,5 @@
+LABEL org.opencontainers.image.source=https://github.com/waelbendhia/s-vet-monorepo
+
 FROM haskell:9.2.8 as build
 RUN mkdir /opt/build
 WORKDIR /opt/build
