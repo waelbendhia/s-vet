@@ -1,9 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
 import { Keyed, Consultation } from "./types";
 import { Button, Modal } from "antd";
 import { cancelConsultationAction } from "./Consultations/state";
 import { ButtonType } from "antd/lib/button";
 import { SizeType } from "antd/lib/config-provider/SizeContext";
+import { useAppDispatch, useAppSelector } from "./hooks";
 
 const CancelButton = ({
   consultation: c,
@@ -14,8 +14,8 @@ const CancelButton = ({
   type?: ButtonType;
   size?: SizeType;
 }) => {
-  const cancelState = useSelector((s) => s.consultations.cancelState);
-  const dispatch = useDispatch();
+  const cancelState = useAppSelector((s) => s.consultations.cancelState);
+  const dispatch = useAppDispatch();
 
   const text = !c.amount ? "annuler" : "supprimer";
 

@@ -11,7 +11,6 @@ import {
 } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { Consultation, isOk, Keyed, Owner, Pet } from "../types";
 import { selectPetAction, updatePetAction } from "./state";
@@ -19,15 +18,16 @@ import FocusView from "../FocusView";
 import OwnerPreview from "../Owners/OwnerPreview";
 import ConsultationPreview from "../Consultations/ConsultationPreview";
 import { DateTime } from "luxon";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const PetView = () => {
-  const { c, state } = useSelector((s) => ({
+  const { c, state } = useAppSelector((s) => ({
     c: s.pets.current,
     state: s.pets.updateState,
   }));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { key } = useParams<{ key: string }>();
-  const cKey = Number.parseInt(key);
+  const cKey = Number.parseInt(key ?? "");
   const [form] = Form.useForm<Keyed<Pet> & { age: moment.Moment }>();
   const [consultations, setConsultaions] = useState<Keyed<Consultation>[]>([]);
   const [owner, setOwner] = useState<Keyed<Owner>>({ key: 0, name: "" });
@@ -74,6 +74,7 @@ const PetView = () => {
       }
     >
       <Form
+        layout="vertical"
         form={form}
         initialValues={
           isOk(c)
@@ -91,7 +92,7 @@ const PetView = () => {
                 age: DateTime.fromJSDate(age.toDate()).toObject(),
                 allergies: [],
                 key: c.key,
-              })
+              }),
             );
           }
         }}

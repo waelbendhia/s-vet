@@ -1,19 +1,19 @@
 import { Link } from "react-router-dom";
 import { Button } from "antd";
 import { DateTime } from "luxon";
-import { useDispatch } from "react-redux";
 import { Keyed, Consultation, formatMass, treatmentName } from "../types";
 import { updateConsultationAction } from "./state";
 import { Descriptions, DescriptionsItem } from "../Descriptions";
 import CancelButton from "../CancelButton";
 import Price from "../Price";
+import { useAppDispatch } from "../hooks";
 
 const ConsultationPreview = ({
   consultation: c,
 }: {
   consultation: Keyed<Consultation>;
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const setPaid = () =>
     !!c.amount

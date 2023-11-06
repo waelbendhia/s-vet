@@ -1,21 +1,21 @@
 import { Form, Input, Button, Spin, Divider, Statistic } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { isOk, Keyed, Owner, Pet } from "../types";
 import { selectOwnerAction, updateOwnerAction } from "./state";
 import FocusView from "../FocusView";
 import PetPreview from "../Pets/PetPreview";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const OwnerView = () => {
-  const { c, state } = useSelector((s) => ({
+  const { c, state } = useAppSelector((s) => ({
     c: s.owners.current,
     state: s.owners.updateState,
   }));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { key } = useParams<{ key: string }>();
-  const cKey = Number.parseInt(key);
+  const cKey = Number.parseInt(key ?? "");
   const [form] = Form.useForm<Keyed<Owner> & { time: moment.Moment }>();
   const [pets, setPets] = useState<Keyed<Pet>[]>([]);
   const [balance, setBalance] = useState<{ paid: number; unpaid: number }>({
@@ -74,6 +74,7 @@ const OwnerView = () => {
       }
     >
       <Form
+        layout="vertical"
         form={form}
         initialValues={isOk(c) ? c : undefined}
         onFinish={(v) => {

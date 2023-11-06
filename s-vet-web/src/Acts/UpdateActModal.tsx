@@ -1,17 +1,17 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { closeUpdateActModal, updateActAction } from "./state";
 import { Form } from "antd";
 import { Act } from "../types";
 import ActModal from "./ActModal";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const UpdateActModal = () => {
-  const { selected, state } = useSelector((s) => ({
+  const { selected, state } = useAppSelector((s) => ({
     selected: s.acts.selectedAct,
     state: s.acts.updateState,
   }));
   const hasSelected = !!selected;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [form] = Form.useForm<Act>();
 
   React.useEffect(() => {

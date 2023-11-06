@@ -1,0 +1,57 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:15
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: svet
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.41
+    environment:
+      COLLECTOR_ZIPKIN_HOST_PORT: :9411
+      COLLECTOR_OTLP_ENABLED: true
+    ports:
+    - "6831:6831/udp"
+    - "6832:6832/udp"
+    - "5778:5778"
+    - "16686:16686"
+    - "4317:4317"
+    - "4318:4318"
+    - "14250:14250"
+    - "14268:14268"
+    - "14269:14269"
+    - "9411:9411"
+
+  server:
+    # image: ghcr.io/waelbendhia/s-vet:v2.1.0
+    build:
+      context: ./s-vet
+      dockerfile: ./Dockerfile
+    environment:
+      DB_URL: sql://${DB_USER}:${DB_PASSWORD}@db:5432/svet
+      PORT: 1234
+      DB_POOL: 16
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
+      OTEL_SERVICE_NAME: s-vet
+    depends_on:
+      - db
+    restart: on-failure
+    ports:
+      - "1234:1234"
+
+  web-app:
+    # image: ghcr.io/waelbendhia/s-vet-web:v2.0.1
+    build:
+      context: ./s-vet-web
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./nginx-conf/:/etc/nginx/conf.d/
+    depends_on:
+      - server
+    ports:
+      - "8080:80"

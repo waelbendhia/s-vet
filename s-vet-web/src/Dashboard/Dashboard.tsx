@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { toComponentState } from "../types";
 import WeekCalendar from "../WeekCalendar";
 import { getConsultationsByHourAction } from "./state";
@@ -7,16 +6,17 @@ import { mapPartialRecord } from "../types";
 import { DatePicker } from "antd";
 import moment from "moment";
 import Price from "../Price";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const toMoment = (v?: string): moment.Moment | null =>
   !!v ? moment(v, "YYYY-MM-DD") : null;
 
 const Dashboard = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     stats: { data, state },
     req,
-  } = useSelector((s) => ({
+  } = useAppSelector((s) => ({
     stats: toComponentState(s.dashboard.consultationsByHour),
     req: s.dashboard.searchRequest,
   }));
@@ -39,7 +39,7 @@ const Dashboard = () => {
                 getConsultationsByHourAction({
                   after: v?.[0]?.format("YYYY-MM-DD"),
                   before: v?.[1]?.format("YYYY-MM-DD"),
-                })
+                }),
               )
             }
           />
@@ -59,7 +59,7 @@ const Dashboard = () => {
                   : `${numberOfConsultations} consultation`}{" "}
                 <Price price={revenue} />
               </div>
-            )
+            ),
           )}
           defaultCell={<div className="schedule-cell-0" />}
         />

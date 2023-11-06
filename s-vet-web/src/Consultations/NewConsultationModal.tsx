@@ -1,5 +1,4 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { closeConsultationModal, createConsultationAction } from "./state";
 import { Button, DatePicker, Form, Input, Modal } from "antd";
 import { Keyed, Owned, Pet } from "../types";
@@ -7,14 +6,15 @@ import { DateTime } from "luxon";
 import PetSelect from "../Pets/PetSelect";
 import moment from "moment";
 import { useStateWithPromise } from "../selectors";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const NewConsultationModal = () => {
-  const { visible, state } = useSelector((s) => ({
+  const { visible, state } = useAppSelector((s) => ({
     visible: s.consultations.createModalOpen,
     state: s.consultations.createState,
   }));
   const loading = state === "Loading";
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [startImmediately, setStartImmediately] = useStateWithPromise(false);
   const [form] = Form.useForm<{
     patient: Owned<Keyed<Pet>>;
@@ -36,7 +36,7 @@ const NewConsultationModal = () => {
 
   return (
     <Modal
-      visible={visible}
+      open={visible}
       onCancel={() => dispatch(closeConsultationModal())}
       footer={
         <Button.Group>
@@ -55,6 +55,7 @@ const NewConsultationModal = () => {
     >
       <Form
         form={form}
+        layout="vertical"
         onFinish={(v) => {
           dispatch(
             createConsultationAction({
@@ -65,7 +66,7 @@ const NewConsultationModal = () => {
                 time: DateTime.fromJSDate(v.time.toDate()),
                 treatment: [],
               },
-            })
+            }),
           );
         }}
       >

@@ -1,13 +1,13 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import { closeActModal, createActAction } from "./state";
 import ActModal from "./ActModal";
 
 const NewActModal = () => {
-  const { visible, state } = useSelector((s) => ({
+  const { visible, state } = useAppSelector((s) => ({
     visible: s.acts.createModalOpen,
     state: s.acts.createState,
   }));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   return (
     <ActModal

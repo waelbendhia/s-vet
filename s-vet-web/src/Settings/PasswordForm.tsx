@@ -1,8 +1,8 @@
 import { Form, Input, Button, Alert } from "antd";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { isOk } from "../types";
 import { updatePasswordAction } from "./state";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 type PasswordFormData = {
   oldPassword: string;
@@ -11,8 +11,8 @@ type PasswordFormData = {
 };
 
 const PasswordForm = () => {
-  const state = useSelector((s) => s.settings.changePasswordState);
-  const dispatch = useDispatch();
+  const state = useAppSelector((s) => s.settings.changePasswordState);
+  const dispatch = useAppDispatch();
   const [form] = Form.useForm();
   const [newPassword, setNewPassword] = useState<string | undefined>(undefined);
 

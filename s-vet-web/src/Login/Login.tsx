@@ -1,16 +1,17 @@
 import { Button, Card, Input, Form, Alert } from "antd";
-import { useDispatch, useSelector } from "react-redux";
 import { submitLogin } from "./state";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const Login = () => {
-  const dispatch = useDispatch();
-  const { account } = useSelector((s) => ({ account: s.login.loginResult }));
+  const dispatch = useAppDispatch();
+  const { account } = useAppSelector((s) => ({ account: s.login.loginResult }));
 
   return (
     <div className="login-root">
       <Card title="Connexion">
         <Form
           style={{ minWidth: "320px" }}
+          layout="vertical"
           onFinish={(v) => dispatch(submitLogin(v))}
         >
           <Form.Item

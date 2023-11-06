@@ -12,7 +12,7 @@ export const useIs2Columns = () =>
   useMediaQuery({ query: "(min-width: 1600px)" });
 
 export const useStateWithPromise = <T>(
-  initialState: T
+  initialState: T,
 ): [T, (_: SetStateAction<T>) => Promise<unknown>] => {
   const [state, setState] = useState({ value: initialState });
   const resolverRef: MutableRefObject<((_: T) => void) | null> = useRef<
@@ -30,6 +30,7 @@ export const useStateWithPromise = <T>(
      * That's why resolverRef.current is also a dependency, because it will guarantee,
      * that handleSetState was called in previous render
      */
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resolverRef.current, state]);
 
   const handleSetState = useCallback(
@@ -43,7 +44,7 @@ export const useStateWithPromise = <T>(
         resolverRef.current = resolve;
       });
     },
-    [setState]
+    [setState],
   );
 
   return [state.value, handleSetState];

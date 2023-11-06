@@ -1,16 +1,13 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { push } from 'connected-react-router';
-import { DefaultRootState } from 'react-redux';
-import { matchPath } from 'react-router';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { matchPath } from "react-router";
 import {
   cancelConsultation,
   createConsultation,
   getConsultation,
   searchConsultations,
   updateConsultation,
-} from '../api';
-import { getHomeData } from '../Home/state';
-import { logout } from '../Login/state';
+} from "../api";
+import { LocalState as HomeState, getHomeData } from "../Home/state";
 import {
   Consultation,
   ConsultationSearchRequest,
@@ -23,14 +20,39 @@ import {
   SearchResult,
   WithMemo,
   WithPet,
-} from '../types';
+} from "../types";
+import { RouterState, push } from "redux-first-history";
+
+const initialState = {
+  createModalOpen: false,
+  createState: "NotRequested" as Loadable<"Ok">,
+  cancelState: "NotRequested" as Loadable<"Ok">,
+  updateState: "NotRequested" as Loadable<"Ok">,
+  searchRequest: {
+    page: 0,
+    itemsPerPage: 10,
+  } as ConsultationSearchRequest,
+  consultations: initMemo({ rows: [], total: 0 }) as WithMemo<
+    SearchResult<FullConsultation>
+  >,
+  current: "NotRequested" as Loadable<FullWithPrevious>,
+};
+
+export type LocalState = typeof initialState;
+type ThunkAPI = HomeState & {
+  state: {
+    home: HomeState;
+    consultations: LocalState;
+    router: RouterState;
+  };
+};
 
 export const getConsultations = createAsyncThunk<
   SearchResult<FullConsultation>,
   ConsultationSearchRequest,
-  { state: DefaultRootState }
+  ThunkAPI
 >(
-  'consultations/getConsultations',
+  "consultations/getConsultations",
   (p: ConsultationSearchRequest, thunkAPI) => {
     const req: ConsultationSearchRequest = {
       ...thunkAPI.getState().consultations.searchRequest,
@@ -38,14 +60,14 @@ export const getConsultations = createAsyncThunk<
     };
 
     return searchConsultations(req);
-  }
+  },
 );
 
 export const createConsultationAction = createAsyncThunk<
   unknown,
   { startImmediately: boolean; consultation: WithPet<Consultation> },
-  { state: DefaultRootState }
->('consultations/createConsultation', async (c, thunkAPI) => {
+  ThunkAPI
+>("consultations/createConsultation", async (c, thunkAPI) => {
   const res = await createConsultation(c.consultation);
   const state = thunkAPI.getState();
 
@@ -62,9 +84,9 @@ export const createConsultationAction = createAsyncThunk<
 export const updateConsultationAction = createAsyncThunk<
   Keyed<Consultation>,
   Keyed<Consultation>,
-  { state: DefaultRootState }
+  ThunkAPI
 >(
-  'consultations/updateConsultation',
+  "consultations/updateConsultation",
   async (c: Keyed<Consultation>, thunkAPI) => {
     const res = await updateConsultation(c);
     const state = thunkAPI.getState();
@@ -73,74 +95,57 @@ export const updateConsultationAction = createAsyncThunk<
     thunkAPI.dispatch(getHomeData());
     thunkAPI.dispatch(getConsultations(state.consultations.searchRequest));
 
-    const m = matchPath<{ id: string }>(state.router.location.pathname, {
-      path: '/consultations/:id',
-      exact: true,
-    });
+    const m =
+      state.router.location?.pathname &&
+      matchPath("/consultations/:id", state.router.location?.pathname);
 
     if (!!m && isOk(current) && current.key !== res.key) {
       thunkAPI.dispatch(selectConsultationAction(current.key));
     }
 
     return res;
-  }
+  },
 );
 
 export const cancelConsultationAction = createAsyncThunk<
   void,
   number,
-  { state: DefaultRootState }
->('consultations/cancelConsultation', async (cKey, thunkAPI) => {
+  ThunkAPI
+>("consultations/cancelConsultation", async (cKey, thunkAPI) => {
   await cancelConsultation(cKey);
   const state = thunkAPI.getState();
   const { current } = state.consultations;
 
-  const m = matchPath<{ id: string }>(state.router.location.pathname, {
-    path: '/consultations/:id',
-    exact: true,
-  });
+  const m =
+    state.router.location?.pathname &&
+    matchPath("/consultations/:id", state.router.location.pathname);
 
   if (!!m && isOk(current)) {
     thunkAPI.dispatch(selectConsultationAction(current.key));
   }
 
-  switch (state.router.location.pathname) {
-    case '/':
+  switch (state.router.location?.pathname) {
+    case "/":
       thunkAPI.dispatch(getHomeData());
       break;
-    case '/consultations':
+    case "/consultations":
       thunkAPI.dispatch(getConsultations(state.consultations.searchRequest));
       break;
   }
 });
 
 export const selectConsultationAction = createAsyncThunk(
-  'consultations/selectConsultation',
-  (cKey: number) => getConsultation(cKey)
+  "consultations/selectConsultation",
+  (cKey: number) => getConsultation(cKey),
 );
 
-const initialState = {
-  createModalOpen: false,
-  createState: 'NotRequested' as Loadable<'Ok'>,
-  cancelState: 'NotRequested' as Loadable<'Ok'>,
-  updateState: 'NotRequested' as Loadable<'Ok'>,
-  searchRequest: {
-    page: 0,
-    itemsPerPage: 10,
-  } as ConsultationSearchRequest,
-  consultations: initMemo({ rows: [], total: 0 }) as WithMemo<
-    SearchResult<FullConsultation>
-  >,
-  current: 'NotRequested' as Loadable<FullWithPrevious>,
-};
-
 const consultationsSlice = createSlice({
-  name: 'consultations',
+  name: "consultations",
   initialState: {
     createModalOpen: false,
-    createState: 'NotRequested' as Loadable<'Ok'>,
-    cancelState: 'NotRequested' as Loadable<'Ok'>,
-    updateState: 'NotRequested' as Loadable<'Ok'>,
+    createState: "NotRequested" as Loadable<"Ok">,
+    cancelState: "NotRequested" as Loadable<"Ok">,
+    updateState: "NotRequested" as Loadable<"Ok">,
     searchRequest: {
       page: 0,
       itemsPerPage: 10,
@@ -148,11 +153,11 @@ const consultationsSlice = createSlice({
     consultations: initMemo({ rows: [], total: 0 }) as WithMemo<
       SearchResult<FullConsultation>
     >,
-    current: 'NotRequested' as Loadable<FullWithPrevious>,
+    current: "NotRequested" as Loadable<FullWithPrevious>,
   },
   reducers: {
     openNewConsultationModal: (s) => {
-      s.createState = 'NotRequested';
+      s.createState = "NotRequested";
       s.createModalOpen = true;
     },
     closeConsultationModal: (s) => {
@@ -162,59 +167,57 @@ const consultationsSlice = createSlice({
   extraReducers: (b) =>
     b
       .addCase(createConsultationAction.pending, (s) => {
-        s.createState = 'Loading';
+        s.createState = "Loading";
       })
       .addCase(createConsultationAction.fulfilled, (s) => {
-        s.createState = 'Ok';
+        s.createState = "Ok";
         s.createModalOpen = false;
       })
       .addCase(createConsultationAction.rejected, (s) => {
-        s.createState = 'NetworkError';
+        s.createState = "NetworkError";
       })
       .addCase(cancelConsultationAction.pending, (s) => {
-        s.cancelState = 'Loading';
+        s.cancelState = "Loading";
       })
       .addCase(cancelConsultationAction.fulfilled, (s) => {
-        s.cancelState = 'Ok';
+        s.cancelState = "Ok";
       })
       .addCase(cancelConsultationAction.rejected, (s) => {
-        s.cancelState = 'NetworkError';
+        s.cancelState = "NetworkError";
       })
       .addCase(updateConsultationAction.pending, (s) => {
-        s.updateState = 'Loading';
+        s.updateState = "Loading";
       })
       .addCase(updateConsultationAction.fulfilled, (s) => {
-        s.updateState = 'Ok';
+        s.updateState = "Ok";
       })
       .addCase(updateConsultationAction.rejected, (s) => {
-        s.updateState = 'NetworkError';
+        s.updateState = "NetworkError";
       })
       .addCase(getConsultations.pending, (s, a) => {
         s.searchRequest = { ...s.searchRequest, ...a.meta.arg };
-        s.consultations.value = 'Loading';
+        s.consultations.value = "Loading";
       })
       .addCase(getConsultations.fulfilled, (s, a) => {
         s.consultations.value = a.payload;
         s.consultations.memo = a.payload;
       })
       .addCase(getConsultations.rejected, (s) => {
-        s.consultations.value = 'NetworkError';
+        s.consultations.value = "NetworkError";
       })
       .addCase(selectConsultationAction.pending, (s) => {
-        s.current = 'Loading';
+        s.current = "Loading";
       })
       .addCase(selectConsultationAction.fulfilled, (s, a) => {
         s.current = a.payload;
       })
       .addCase(selectConsultationAction.rejected, (s) => {
-        s.current = 'NetworkError';
+        s.current = "NetworkError";
       })
-      .addCase('logout/pending', () => initialState),
+      .addCase("logout/pending", () => initialState),
 });
 
-export const {
-  openNewConsultationModal,
-  closeConsultationModal,
-} = consultationsSlice.actions;
+export const { openNewConsultationModal, closeConsultationModal } =
+  consultationsSlice.actions;
 
 export default consultationsSlice.reducer;

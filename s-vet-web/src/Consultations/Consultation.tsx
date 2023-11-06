@@ -10,7 +10,6 @@ import {
 import { DateObject, DateTime } from "luxon";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import {
   isOk,
@@ -32,6 +31,7 @@ import PetPreview from "../Pets/PetPreview";
 import FocusView from "../FocusView";
 import Checkbox from "antd/lib/checkbox/Checkbox";
 import Price from "../Price";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const checkWeekDay = (n: number): n is 1 | 2 | 3 | 4 | 5 | 6 | 7 =>
   n === 1 || n === 2 || n === 3 || n === 4 || n === 5 || n === 6 || n === 7;
@@ -67,15 +67,15 @@ const dateObjectToJSDate = (d?: DateObject): Date | undefined =>
   !!d ? DateTime.fromObject(d).toJSDate() : undefined;
 
 const ConsultationView = () => {
-  const { c, basePrice, state } = useSelector((s) => ({
+  const { c, basePrice, state } = useAppSelector((s) => ({
     c: s.consultations.current,
     basePrice: calculateBasePrice(extractValue(s.settings.settings)),
     state: s.consultations.updateState,
   }));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { key } = useParams<{ key: string }>();
-  const cKey = Number.parseInt(key);
+  const cKey = Number.parseInt(key ?? "");
   const [form] = Form.useForm<
     Keyed<Consultation> & { time: moment.Moment; withConsultation: boolean }
   >();
@@ -139,6 +139,7 @@ const ConsultationView = () => {
       <h2>Consultation Actuelle</h2>
       <Spin spinning={c === "Loading"}>
         <Form
+          layout="vertical"
           form={form}
           initialValues={
             isOk(c)
@@ -163,8 +164,8 @@ const ConsultationView = () => {
                   c.treatment.tag === "Specific"
                     ? p + c.treatment.contents.price
                     : p + 0,
-                0
-              )
+                0,
+              ),
             );
             setTotalPrice((p) => c.amount?.total ?? p);
             setWithConsultation(c.withConsultation);

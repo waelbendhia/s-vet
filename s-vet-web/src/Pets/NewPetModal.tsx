@@ -1,18 +1,18 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { closePetModal, createPetAction } from "./state";
 import { Form, Modal } from "antd";
 import { Owned, Pet } from "../types";
 import { DateTime } from "luxon";
 import PetForm from "./PetForm";
 import ModalFooter from "../ModalFooter";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const NewPetModal = () => {
-  const { visible, state } = useSelector((s) => ({
+  const { visible, state } = useAppSelector((s) => ({
     visible: s.pets.createModalOpen,
     state: s.pets.createState,
   }));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [form] = Form.useForm<
     Omit<Owned<Pet>, "age"> & { age: moment.Moment }
   >();
@@ -28,7 +28,7 @@ const NewPetModal = () => {
     <Modal
       zIndex={1001}
       onCancel={() => dispatch(closePetModal())}
-      visible={visible}
+      open={visible}
       footer={
         <ModalFooter
           onCancel={() => dispatch(closePetModal())}

@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { toComponentState, translateSpeciesWithSex } from "./types";
 import { Button, List } from "antd";
 import CancelButton from "./CancelButton";
 import { SizeType } from "antd/lib/config-provider/SizeContext";
 import { useEffect } from "react";
 import { getHomeData } from "./Home/state";
+import { useAppDispatch, useAppSelector } from "./hooks";
 
 const Appointments = ({ size = "medium" as SizeType }) => {
-  const dispatch = useDispatch();
-  const { consultations } = useSelector((s) => ({
+  const dispatch = useAppDispatch();
+  const { consultations } = useAppSelector((s) => ({
     consultations: toComponentState(s.home.consultations),
   }));
 

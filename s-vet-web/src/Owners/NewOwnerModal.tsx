@@ -1,16 +1,16 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { closeOwnerModal, createOwnerAction } from "./state";
 import { Form, Input, Modal } from "antd";
 import { Owner } from "../types";
 import ModalFooter from "../ModalFooter";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const NewPetModal = () => {
-  const { visible, state } = useSelector((s) => ({
+  const { visible, state } = useAppSelector((s) => ({
     visible: s.owners.createModalOpen,
     state: s.owners.createState,
   }));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [form] = Form.useForm<Owner>();
 
   React.useEffect(() => {
@@ -24,7 +24,7 @@ const NewPetModal = () => {
     <Modal
       zIndex={1002}
       onCancel={() => dispatch(closeOwnerModal())}
-      visible={visible}
+      open={visible}
       footer={
         <ModalFooter
           onCancel={() => dispatch(closeOwnerModal())}
@@ -35,6 +35,7 @@ const NewPetModal = () => {
       title="Nouveau Propriétaire"
     >
       <Form
+        layout="vertical"
         form={form}
         onFinish={(o) => {
           dispatch(createOwnerAction(o));

@@ -40,9 +40,7 @@
     margin-bottom: 12px;
   }
   .ant-form-item {
-    display: grid;
-    grid-template-columns: 80px 1fr;
-    grid-gap: 8px;
+    display: flex;
   }
 }
 
@@ -145,6 +143,10 @@
   background-color: @layout-header-background;
   border-radius: @border-radius-base*2px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.home-list {
+  flex: 1;
 }
 
 .appointments-list {
@@ -314,7 +316,7 @@
     .ant-menu {
       height: 100%;
       .ant-menu-item {
-        height: 100% - 1px;
+        height: 100%;
       }
     }
   }

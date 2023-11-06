@@ -1,13 +1,13 @@
-import { Layout, Menu, Button } from 'antd';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from './Login/state';
+import { Layout, Menu, Button } from "antd";
+import { Link } from "react-router-dom";
+import { logout } from "./Login/state";
+import { useAppDispatch, useAppSelector } from "./hooks";
 
 const Navigation = () => {
-  const dispatch = useDispatch();
-  const { account, path } = useSelector((s) => ({
+  const dispatch = useAppDispatch();
+  const { account, path } = useAppSelector((s) => ({
     account: s.login.account,
-    path: s.router.location.pathname,
+    path: s.router.location?.pathname,
   }));
 
   return (
@@ -16,9 +16,9 @@ const Navigation = () => {
         <div className="logo" />
         <div>CVAZN</div>
       </div>
-      {typeof account === 'object' && (
+      {typeof account === "object" && (
         <>
-          <Menu selectedKeys={[path]} mode="horizontal">
+          <Menu selectedKeys={path ? [path] : []} mode="horizontal">
             <Menu.Item key="/">
               <Link to="/">Accueil</Link>
             </Menu.Item>

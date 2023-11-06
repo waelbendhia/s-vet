@@ -1,9 +1,9 @@
 import { AutoComplete, Button } from "antd";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { searchOwners } from "../api";
 import { Keyed, Owner, isOk } from "../types";
 import { openNewOwnerModal } from "./state";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const ownerToSelectValue = (owner: Keyed<Owner>) => ({
   owner,
@@ -16,10 +16,12 @@ export type OwnerSelectProps = {
 };
 
 const OwnerSelect = ({ onChange }: OwnerSelectProps) => {
-  const loggedIn = useSelector((s) => isOk(s.login.account));
-  const createResult = useSelector((s) => s.owners.createState);
+  const { loggedIn, createResult } = useAppSelector((s) => ({
+    loggedIn: isOk(s.login.account),
+    createResult: s.owners.createState,
+  }));
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [search, setSearch] = React.useState("");
   const [owners, setOwners] = React.useState<
     { owner: Keyed<Owner>; value: string; label: string }[]

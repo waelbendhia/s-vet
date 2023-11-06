@@ -1,9 +1,9 @@
 import { AutoComplete, Button } from "antd";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { searchPets } from "../api";
 import { Owned, Keyed, Pet, isOk } from "../types";
 import { openNewPetModal } from "./state";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const petToSelectValue = (pet: Owned<Keyed<Pet>>) => ({
   pet,
@@ -16,10 +16,12 @@ export type PetSelectProps = {
 };
 
 const PetSelect = ({ onChange }: PetSelectProps) => {
-  const loggedIn = useSelector((s) => isOk(s.login.account));
-  const createResult = useSelector((s) => s.pets.createState);
+  const { loggedIn, createResult } = useAppSelector((s) => ({
+    loggedIn: isOk(s.login.account),
+    createResult: s.pets.createState,
+  }));
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [search, setSearch] = React.useState("");
   const [pets, setPets] = React.useState<
     { pet: Owned<Keyed<Pet>>; value: number; label: string }[]

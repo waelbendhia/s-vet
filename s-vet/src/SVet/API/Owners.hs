@@ -15,7 +15,7 @@ type InsertSub = "owners" :> ReqBody '[JSON] Owner :> Post '[JSON] (Entity Owner
 type InsertAPI = SVetAuth :> InsertSub
 
 insertHandler ::
-  Members [Embed IO, Error AuthenticationError, OwnerRepository] r =>
+  (Members [Embed IO, Error AuthenticationError, OwnerRepository] r) =>
   ServerT (Traced :> InsertAPI) (Sem r)
 insertHandler = serverWithVet @InsertSub \v -> insertOwner v . ownerEmtpyFieldsToNothing
 
@@ -29,7 +29,7 @@ type InsertPetSub =
 type InsertPetAPI = SVetAuth :> InsertPetSub
 
 insertPetHandler ::
-  Members [Embed IO, Error AuthenticationError, PetRepository] r =>
+  (Members [Embed IO, Error AuthenticationError, PetRepository] r) =>
   ServerT (Traced :> InsertPetAPI) (Sem r)
 insertPetHandler = serverWithVet @InsertPetSub \v k -> insertPet v k . petEmptyFieldsToNothing
 
@@ -42,7 +42,7 @@ type UpdateSub =
 type UpdateAPI = SVetAuth :> UpdateSub
 
 updateHandler ::
-  Members [Embed IO, Error AuthenticationError, OwnerRepository] r =>
+  (Members [Embed IO, Error AuthenticationError, OwnerRepository] r) =>
   ServerT (Traced :> UpdateAPI) (Sem r)
 updateHandler = serverWithVet @UpdateSub \v k -> updateOwner v k . ownerEmtpyFieldsToNothing
 
@@ -51,7 +51,7 @@ type GetSub = "owners" :> Capture "key" (EntKey Owner) :> Get '[JSON] OwnerWithP
 type GetAPI = SVetAuth :> GetSub
 
 getHandler ::
-  Members [Embed IO, Error AuthenticationError, OwnerRepository] r =>
+  (Members [Embed IO, Error AuthenticationError, OwnerRepository] r) =>
   ServerT (Traced :> GetAPI) (Sem r)
 getHandler = serverWithVet @GetSub getOwner
 
@@ -65,7 +65,7 @@ type SearchSub =
 type SearchAPI = SVetAuth :> SearchSub
 
 searchHandler ::
-  Members [Embed IO, Error AuthenticationError, OwnerRepository] r =>
+  (Members [Embed IO, Error AuthenticationError, OwnerRepository] r) =>
   ServerT (Traced :> SearchAPI) (Sem r)
 searchHandler = serverWithVet @SearchSub \v p ipp ->
   searchOwners v . OwnerSearchRequest (max 0 $ p ?: 0) (max 1 $ min 50 $ ipp ?: 0)
@@ -75,7 +75,7 @@ type CreatePasswordSub = "owners" :> Capture "key" (EntKey Owner) :> "password" 
 type CreatePasswordAPI = SVetAuth :> CreatePasswordSub
 
 createPasswordHandler ::
-  Members [Embed IO, Error AuthenticationError, OwnerRepository] r =>
+  (Members [Embed IO, Error AuthenticationError, OwnerRepository] r) =>
   ServerT (Traced :> CreatePasswordAPI) (Sem r)
 createPasswordHandler =
   serverWithVet @CreatePasswordSub \v k -> ((show k <> "-") <>) <$> createOwnerPassword v k
@@ -84,7 +84,7 @@ type OwnersAPI =
   InsertAPI :<|> InsertPetAPI :<|> UpdateAPI :<|> GetAPI :<|> SearchAPI :<|> CreatePasswordAPI
 
 ownersHandler ::
-  Members [Embed IO, Error AuthenticationError, OwnerRepository, PetRepository] r =>
+  (Members [Embed IO, Error AuthenticationError, OwnerRepository, PetRepository] r) =>
   ServerT (TracedAPI OwnersAPI) (Sem r)
 ownersHandler =
   insertHandler

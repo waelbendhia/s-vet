@@ -1,14 +1,14 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { toComponentState } from "../types";
 import { getHomeData } from "./state";
 import { Button, Spin, Statistic, PageHeader } from "antd";
 import { openNewConsultationModal } from "../Consultations/state";
 import Appointments from "../Appointments";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const Home = () => {
-  const dispatch = useDispatch();
-  const { statistics } = useSelector((s) => ({
+  const dispatch = useAppDispatch();
+  const { statistics } = useAppSelector((s) => ({
     consultations: toComponentState(s.home.consultations),
     statistics: toComponentState(s.home.statistics),
   }));

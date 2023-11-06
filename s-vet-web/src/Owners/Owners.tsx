@@ -1,12 +1,12 @@
 import { Button } from "antd";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { Keyed, Owner, toComponentState } from "../types";
 import { openNewOwnerModal, getOwners } from "./state";
 import TableView from "../TableView";
+import { useAppSelector } from "../hooks";
 
 export const Consultations = () => {
-  const { owners, request } = useSelector((s) => ({
+  const { owners, request } = useAppSelector((s) => ({
     owners: toComponentState(s.owners.owners),
     request: s.owners.searchRequest,
   }));

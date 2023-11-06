@@ -11,7 +11,7 @@ type Props = {
 };
 
 const PetForm = ({ form, onFinish }: Props) => (
-  <Form form={form} initialValues={{ neutered: false }} onFinish={onFinish}>
+  <Form layout="vertical" form={form} initialValues={{ neutered: false }} onFinish={onFinish}>
     <Form.Item name="owner" label="Propriétaire" rules={[{ required: true }]}>
       <OwnerSelect />
     </Form.Item>

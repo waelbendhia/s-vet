@@ -1,7 +1,6 @@
 import { Button, Form, InputNumber, Spin, TimePicker } from "antd";
 import moment from "moment";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   currencyParser,
   daysOfTheWeek,
@@ -14,6 +13,7 @@ import {
   WeekDay,
 } from "../types";
 import { updateSettingsAction } from "./state";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 type SettingsForm = {
   prices: Settings["prices"];
@@ -51,11 +51,11 @@ const fromSettingsForm = (s: SettingsForm): Settings => ({
 });
 
 const TariffsAndSchedule = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     settings: { state: settingsState, data: settings },
     updateState,
-  } = useSelector((s) => ({
+  } = useAppSelector((s) => ({
     settings: toComponentState(s.settings.settings),
     updateState: s.settings.updateState,
   }));
@@ -73,6 +73,7 @@ const TariffsAndSchedule = () => {
       <Spin spinning={settingsState === "Loading" || updateState === "Loading"}>
         <h3>Tarifs</h3>
         <Form<SettingsForm>
+          layout="vertical"
           form={form}
           initialValues={toSettingsForm(settings)}
           onFinish={(v) => dispatch(updateSettingsAction(fromSettingsForm(v)))}

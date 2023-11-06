@@ -1,6 +1,5 @@
 import { Button, Form, Table, Input, Modal } from "antd";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import FocusView from "../FocusView";
 import { Act, Keyed, toComponentState, useDebounce } from "../types";
 import { deleteActAction, getSettingsAction, searchActsAction } from "./state";
@@ -8,16 +7,17 @@ import { openNewActModal, openUpdateActModal } from "../Acts/state";
 import TariffsAndSchedule from "./TariffsAndSchedule";
 import PasswordForm from "./PasswordForm";
 import Price from "../Price";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const SettingsView = () => {
   const {
     acts: { state: actsState, data: acts },
     searchTerm,
-  } = useSelector((s) => ({
+  } = useAppSelector((s) => ({
     acts: toComponentState(s.settings.acts),
     searchTerm: s.settings.search,
   }));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 200);
 

@@ -1,7 +1,6 @@
 import { PageHeader } from "antd";
-import { goBack } from "connected-react-router";
-import { useDispatch } from "react-redux";
 import { useIs2Columns } from "./selectors";
+import { useNavigate } from "react-router-dom";
 
 const FocusView = ({
   title = "",
@@ -11,14 +10,14 @@ const FocusView = ({
   responsive = true,
   backButton = true,
 }) => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const using2Columns = useIs2Columns();
   const is2Columns = !responsive || using2Columns;
 
   return (
     <div className="page-root">
       <PageHeader
-        onBack={backButton ? () => dispatch(goBack()) : undefined}
+        onBack={backButton ? () => navigate(-1) : undefined}
         title={title}
         subTitle={!is2Columns ? subTitle : undefined}
         ghost={false}

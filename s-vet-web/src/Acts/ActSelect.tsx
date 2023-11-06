@@ -1,6 +1,6 @@
 import { Button, Select } from "antd";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import { getActs } from "../api";
 import Price from "../Price";
 import {
@@ -30,8 +30,8 @@ export type ActsSelectProps = {
 };
 
 const ActSelect = ({ onChange, defaultValue, value }: ActsSelectProps) => {
-  const loggedIn = useSelector((s) => isOk(s.login.account));
-  const dispatch = useDispatch();
+  const loggedIn = useAppSelector((s) => isOk(s.login.account));
+  const dispatch = useAppDispatch();
   const [acts, setActs] = React.useState<
     { act: Keyed<Act>; value: string; label: React.ReactNode }[]
   >([]);

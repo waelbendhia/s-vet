@@ -1,12 +1,13 @@
 import { Button, Form, Input, Table, PageHeader } from "antd";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "./hooks";
 import { useDebounce } from "./types";
 import { AnyAction } from "redux";
 import { ColumnsType } from "antd/lib/table";
 import Appointments from "./Appointments";
 import { useIs2Columns } from "./selectors";
 import { SizeType } from "antd/lib/config-provider/SizeContext";
+import { AsyncThunkAction } from "@reduxjs/toolkit";
 
 type SearchRequest = {
   page?: number;
@@ -23,13 +24,15 @@ type TableViewProps<T extends object> = {
   total?: number;
   page?: number;
   itemsPerPage?: number;
-  searchAction?: (_: SearchRequest) => {};
+  searchAction?: (
+    _: SearchRequest,
+  ) => AnyAction | AsyncThunkAction<any, any, any>;
   columns?: ColumnsType<T>;
   extraFilters?: React.ReactNode;
   size?: SizeType;
 };
 
-function TableView<T extends object>({
+function TableView<T extends { key: string | number }>({
   title = "",
   newItem = { type: "noop" } as AnyAction,
   newItemLabel = "",
@@ -38,12 +41,12 @@ function TableView<T extends object>({
   total = 0,
   page = 0,
   itemsPerPage = 0,
-  searchAction = (_: SearchRequest): {} => ({ type: "noop" }),
+  searchAction = (_: SearchRequest) => ({ type: "noop" }),
   columns = [] as ColumnsType<T>,
   extraFilters,
   size,
 }: TableViewProps<T>) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 200);
   const is2Columns = useIs2Columns();

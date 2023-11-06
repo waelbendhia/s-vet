@@ -1,13 +1,13 @@
 import { Button } from "antd";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { formatAge, Keyed, Owned, Pet, toComponentState } from "../types";
 import { openNewPetModal, getPets } from "./state";
 import TableView from "../TableView";
 import { DateTime } from "luxon";
+import { useAppSelector } from "../hooks";
 
 export const Pets = () => {
-  const { pets, request } = useSelector((s) => ({
+  const { pets, request } = useAppSelector((s) => ({
     pets: toComponentState(s.pets.pets),
     request: s.pets.searchRequest,
   }));

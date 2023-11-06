@@ -1,7 +1,6 @@
 import { Button, DatePicker, Form, Select } from "antd";
 import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
-import { useDispatch, useSelector } from "react-redux";
 import {
   Consultation,
   FullConsultation,
@@ -17,10 +16,11 @@ import {
 import TableView from "../TableView";
 import CancelButton from "../CancelButton";
 import Price from "../Price";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 export const Consultations = () => {
-  const dispatch = useDispatch();
-  const { consultations, request } = useSelector((s) => ({
+  const dispatch = useAppDispatch();
+  const { consultations, request } = useAppSelector((s) => ({
     consultations: toComponentState(s.consultations.consultations),
     cancelState: s.consultations.cancelState,
     request: s.consultations.searchRequest,
@@ -32,7 +32,7 @@ export const Consultations = () => {
           updateConsultationAction({
             ...c,
             amount: { ...c.amount, paid: c.amount.total, remaining: 0 },
-          })
+          }),
         )
       : undefined;
 
@@ -61,7 +61,7 @@ export const Consultations = () => {
                   getConsultations({
                     after: !!after ? DateTime.fromJSDate(after) : undefined,
                     before: !!before ? DateTime.fromJSDate(before) : undefined,
-                  })
+                  }),
                 );
               }}
             />
@@ -78,7 +78,7 @@ export const Consultations = () => {
                         : v === "completed"
                         ? "completed"
                         : undefined,
-                  })
+                  }),
                 )
               }
             >

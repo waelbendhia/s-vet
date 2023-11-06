@@ -55,7 +55,7 @@ export const searchConsultations = ({
           before: dateObjectToIso(before),
           after: dateObjectToIso(after),
         },
-      }
+      },
     )
     .then((d) => ({
       ...d.data,
@@ -98,7 +98,7 @@ export const searchPets = ({
   axios
     .get<SearchResult<ChangePropType<Owned<Keyed<Pet>>, "age", string>>>(
       "/api/pets",
-      { params: { page, itemsPerPage, ...params } }
+      { params: { page, itemsPerPage, ...params } },
     )
     .then((r) => ({ ...r.data, rows: r.data.rows.map(petAgeToLuxon) }));
 
@@ -141,7 +141,7 @@ export const updateConsultation = ({ key, ...c }: Keyed<Consultation>) =>
   axios
     .put<ChangePropType<Keyed<Consultation>, "time", string>>(
       `/api/consultations/${key}`,
-      c
+      c,
     )
     .then((d) => consultationTimeToLuxon(d.data));
 
@@ -153,9 +153,9 @@ export const createPet = ({ age, ...p }: Owned<Pet>) =>
         ...p,
         age: dateObjectToIsoDate(age),
         owner: null,
-      }
+      },
     )
-    .then((d) => petAgeToLuxon(d.data));
+    .then((d) => ({ ...petAgeToLuxon(d.data), owner: p.owner }));
 
 export const searchOwners = ({
   page = 0,
@@ -199,9 +199,7 @@ export const getConsultation = (cKey: number): Promise<FullWithPrevious> =>
   });
 
 export const getActs = (params: { search?: string }) =>
-  axios
-    .get<Keyed<Act>[]>(`/api/acts`, { params })
-    .then((d) => d.data);
+  axios.get<Keyed<Act>[]>(`/api/acts`, { params }).then((d) => d.data);
 
 export const deleteAct = (aKey: number) =>
   axios.delete<void>(`/api/acts/${aKey}`);

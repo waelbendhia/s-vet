@@ -42,7 +42,7 @@ const ActModal = ({
   return (
     <Modal
       zIndex={1003}
-      visible={visible}
+      open={visible}
       onCancel={onCancel}
       footer={
         <ModalFooter
@@ -54,6 +54,7 @@ const ActModal = ({
       title={title}
     >
       <Form
+        layout="vertical"
         form={form}
         initialValues={{ neutered: false }}
         onFinish={(v) => onFinish(actFormToAct(v))}
