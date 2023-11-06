@@ -12,14 +12,14 @@ jobs:
     steps:
     - name: Pull and restart containers
       uses: appleboy/ssh-action@v1.0.0
+      env: COMPOSE_DIRECTORY
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
         password: ${{ secrets.SSH_PASSWORD }}
         port: ${{ secrets.SSH_PORT }}
-        env: COMPOSE_DIRECTORY
         script: |
           echo $COMPOSE_DIRECTORY
           docker compose --project-directory $COMPOSE_DIRECTORY down
           docker compose --project-directory $COMPOSE_DIRECTORY pull
-          docker compose --project-directory $COMPOSE_DIRECTORY up -d
+          dockerdefine a bunch of seperate workflows for better caching compose --project-directory $COMPOSE_DIRECTORY up -d
