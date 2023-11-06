@@ -24,4 +24,4 @@ jobs:
           echo $COMPOSE_DIRECTORY
           docker compose --project-directory $COMPOSE_DIRECTORY down
           docker compose --project-directory $COMPOSE_DIRECTORY pull
-          dockerdefine a bunch of seperate workflows for better caching compose --project-directory $COMPOSE_DIRECTORY up -d
+          docker compose --project-directory $COMPOSE_DIRECTORY up -d
