@@ -37,7 +37,7 @@ jobs:
     - name: Build and publish
       uses: docker/build-push-action@v5
       with:
-        context: .
+        context: ./s-vet-web
         push: true
         tags: ghcr.io/waelbendhia/s-vet-web:latest
         cache-from: type=gha
@@ -67,7 +67,7 @@ jobs:
     - name: Build and publish
       uses: docker/build-push-action@v5
       with:
-        context: .
+        context: ./s-vet
         push: true
         tags: ghcr.io/waelbendhia/s-vet:latest
         cache-from: type=gha
