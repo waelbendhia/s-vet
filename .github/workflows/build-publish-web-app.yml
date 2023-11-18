@@ -57,6 +57,6 @@ jobs:
         envs: COMPOSE_DIRECTORY
         script: |
           echo "using directory: ${COMPOSE_DIRECTORY}"
-          docker compose --project-directory "${COMPOSE_DIRECTORY}" down web-app
-          docker compose --project-directory "${COMPOSE_DIRECTORY}" pull web-app
-          docker compose --project-directory "${COMPOSE_DIRECTORY}" up web-app -d
+          docker compose --project-directory "${COMPOSE_DIRECTORY}" down s-vet-web-app
+          docker compose --project-directory "${COMPOSE_DIRECTORY}" pull s-vet-web-app
+          docker compose --project-directory "${COMPOSE_DIRECTORY}" up s-vet-web-app -d
